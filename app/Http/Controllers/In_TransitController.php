@@ -4,22 +4,22 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use Auth;
-use App\department;
-use App\file_master;
-use App\File_Type;
-use App\status;
-use App\table_no;
-use App\User;
-use App\Forward;
-use App\Inward;
-use App\Close;
-use App\document_numbering;
+use Illuminate\Support\Facades\Auth;
+use App\Models\department;
+use App\Models\file_master;
+use App\Models\File_Type;
+use App\Models\status;
+use App\Models\table_no;
+use App\Models\User;
+use App\Models\Forward;
+use App\Models\Inward;
+use App\Models\Close;
+use App\Models\document_numbering;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\PDF;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-use Session;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class In_TransitController extends Controller
 {
@@ -41,7 +41,7 @@ class In_TransitController extends Controller
                                 ');
         DB::enableQueryLog();
 
-        $data6 = DB::select('SELECT file_master_tbl.id, file_type_tbl.type, users.name, forward_data_tbl.id AS forward_id, 
+        $data6 = DB::select('SELECT file_master_tbl.id, file_type_tbl.type, users.name, forward_data_tbl.id AS forward_id,
                                 forward_data_tbl.forward_to, forward_data_tbl.inserted_by As from_persion, file_master_tbl.file_type,
                                 file_master_tbl.file_master_no, file_master_tbl.total_pages_of_tipani,
                                 file_master_tbl.total_pages_of_docs, file_master_tbl.subject,
@@ -49,41 +49,41 @@ class In_TransitController extends Controller
                                 file_master_tbl.reference_no, file_master_tbl.reference_date, file_master_tbl.created_by,
                                 file_master_tbl.date, file_master_tbl.table_no,file_master_tbl.department,
                                 file_master_tbl.status, file_master_tbl.inserted_dt, file_master_tbl.inserted_by
-                                
+
                                 FROM forward_data_tbl
                                 LEFT JOIN `file_master_tbl` ON forward_data_tbl.file_master_no = file_master_tbl.file_master_no
                                 LEFT JOIN users ON forward_data_tbl.forward_to=users.id
                                 JOIN file_type_tbl ON file_master_tbl.file_type=file_type_tbl.id
-                                
-                                WHERE file_master_tbl.deleted_at IS NULL 
+
+                                WHERE file_master_tbl.deleted_at IS NULL
                                 AND file_master_tbl.status = "12"
                                 AND forward_data_tbl.file_fwd_status = "0"
                                 AND (forward_data_tbl.inserted_by = "'.Auth::user()->id.'" OR forward_data_tbl.forward_to = "'.Auth::user()->id.'")
-                                
+
                                 ORDER BY forward_data_tbl.`id` DESC
                             ');
         // return $data6;
         // dd(DB::getQueryLog());
-        
+
         // $datacreated;
         $path = "https://".$_SERVER['HTTP_HOST']."/myfinalimg/";
         // return $Standing;
-        
+
         $in_transit_file = DB::select('SELECT
                                             fdt.id AS forward_id,
                                             fdt.file_master_no AS forward_file_master_no,
-                                            
+
                                             fdt.user_login AS from_user,
                                             department_tbl.name AS from_dept_name,
                                             fdt.tableno_login AS from_table_no,
-                                            
+
                                             department_tbl.name AS to_dept_name,
                                             users.name AS to_user_name,
                                             fdt.fowto_table_no AS to_table_no,
-                                            
+
                                             fdt.method AS forward_method,
                                             fdt.Peon AS forward_peon,
-                                            
+
                                             fdt.remark AS forward_remark,
                                             fdt.pdf AS forward_pdf,
                                             fdt.tipani_page AS forward_tipani_page,
@@ -92,16 +92,16 @@ class In_TransitController extends Controller
                                         FROM
                                             forward_data_tbl as fdt
                                         JOIN department_tbl ON fdt.dept_login = department_tbl.id
-                                        
+
                                         LEFT JOIN users ON fdt.forward_to = users.id
-                                        
+
                                         WHERE
                                             fdt.deleted_at IS NULL
                                         ORDER BY
                                             fdt.id
                                         DESC
                                     ');
-        
+
         // return $data6;
 
         return view('In Transit.grid', compact('data', 'path', 'data1', 'data2', 'data6', 'in_transit_file'));
@@ -110,7 +110,7 @@ class In_TransitController extends Controller
     public function edit($id)
     {
         $data = Forward::find($id);
-        
+
         $data6 = DB::select('SELECT file_master_tbl.id, file_type_tbl.type, users.name, forward_data_tbl.id AS forward_id, file_master_tbl.file_type,
                                 file_master_tbl.file_master_no, file_master_tbl.total_pages_of_tipani,
                                 file_master_tbl.total_pages_of_docs, file_master_tbl.subject,
@@ -118,15 +118,15 @@ class In_TransitController extends Controller
                                 file_master_tbl.reference_no, file_master_tbl.reference_date, file_master_tbl.created_by,
                                 file_master_tbl.date, file_master_tbl.table_no,file_master_tbl.department,
                                 file_master_tbl.status, file_master_tbl.inserted_dt, file_master_tbl.inserted_by
-                                
+
                                 FROM `file_master_tbl`
                                 JOIN file_type_tbl ON file_master_tbl.file_type=file_type_tbl.id
                                 LEFT JOIN users ON file_master_tbl.current_user_id=users.id
                                 LEFT JOIN forward_data_tbl ON file_master_tbl.inserted_by=forward_data_tbl.inserted_by
-                                
+
                                 WHERE file_master_tbl.deleted_at IS NULL ORDER BY `id` DESC
                             ');
-        
+
         // $data = file_master::get();
         $department = User::orderBy('id','asc')->pluck('name', 'id');
         $department_name = department::orderBy('id','asc')->where("status" , "Active")->pluck('name', 'id');
@@ -150,7 +150,7 @@ class In_TransitController extends Controller
         //     // 'tipani_page' => 'required',
         //     // 'inward_status' => 'required',
         //     'file_status' => 'required',
-          
+
         // ],[
         //     // 'file_master_no.required' => 'File Master No. is required',
         //     'department_name.required' => 'Department Name is required',
@@ -164,9 +164,9 @@ class In_TransitController extends Controller
         //     // 'inward_status.required' => 'Inward Status is required.',
         //     'file_status.required' => 'File Status is required',
         //   ]);
-          
+
         $data = Forward::find($id);
-        
+
         if ($request->hasFile('pdf'))
         {
             $file = $request->file('pdf');
@@ -178,7 +178,7 @@ class In_TransitController extends Controller
             $data->pdf = $fileName;
             //return $fileName;
         }
-        
+
         $data->file_master_no = $request->get('file_master_no');
         $data->department_name = $request->get('department_name');
         $data->forward_to = $request->get('forward_to');
@@ -195,7 +195,7 @@ class In_TransitController extends Controller
         $data->tableno_login =  $request->get('tableno_login');
         $data->file_fwd_status =  0;
         $data->save();
-        
+
         $doc_no = DB::select('UPDATE file_master_tbl
                                 SET status = "'.$data->file_status.'", last_frw_by = "'.$data->inserted_by.'", current_user_id = "'.$data->forward_to.'",  modify_by = "'.$data->inserted_by.'", modify_dt = "'.$data->inserted_dt.'"
                                 WHERE file_master_no = "'.$data->file_master_no.'"

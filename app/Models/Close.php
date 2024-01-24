@@ -1,12 +1,15 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Haruncpi\LaravelUserActivity\Traits\Loggable;
+
 class Close extends Model
 {
-    use SoftDeletes;
+    use HasFactory, SoftDeletes, Loggable;
 
     protected $table='close_data_tbl';
     public $timestamps=false;

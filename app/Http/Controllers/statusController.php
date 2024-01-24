@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\status;
-use Redirect;
+use App\Models\status;
+use Illuminate\Support\Facades\Redirect;
 use PDF;
-use DB;
-use Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class statusController extends Controller
@@ -16,7 +16,7 @@ class statusController extends Controller
     {
         $data = DB::select('SELECT * FROM `status_tbl` WHERE deleted_at IS NULL ORDER BY `id` DESC');
         // return $Standing;
-        
+
         return view('Status.grid', compact('data'));
     }
 
@@ -27,16 +27,14 @@ class statusController extends Controller
 
     public function store(Request $request)
     {
-        $this->validate($request, [
-          'name' => 'required',
-        //   'follow_up' => 'required',
-          'status' => 'required',
-        ],[
-           'name.required' => 'Name is required',
-        //   'follow_up.required' => 'Follow Up is required',
-           'status.required' => 'Status is required',
-           
-          ]);
+        Validator::make($request->all(), [
+            'name' => 'required',
+            'status' => 'required',
+          ],[
+             'name.required' => 'Name is required',
+             'logo.required' => 'Status is required',
+            ]);
+
         $data = new status();
         $data->status = $request->get('status');
         // $data->follow_up = $request->get('follow_up');
@@ -62,16 +60,14 @@ class statusController extends Controller
 
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-          'name' => 'required',
-        //   'follow_up' => 'required',
-          'status' => 'required',
-        ],[
-           'name.required' => 'Name is required',
-        //   'follow_up.required' => 'Follow Up is required',
-           'status.required' => 'Status is required',
-           
-          ]);
+        Validator::make($request->all(), [
+            'name' => 'required',
+            'status' => 'required',
+          ],[
+             'name.required' => 'Name is required',
+             'logo.required' => 'Status is required',
+            ]);
+
         $data = status::find($id);
         $data->status = $request->get('status');
         // $data->follow_up = $request->get('follow_up');

@@ -62,7 +62,7 @@
                         </thead>
                         <tbody>
                             @foreach ($data6 as $key => $file_type)
-                                
+
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $file_type->file_master_no }}</td>
@@ -83,7 +83,7 @@
                                         @else()
                                             <td>Partially Completed</td>
                                         @endif
-                                        
+
                                         <td>{{ $file_type->created_by }}</td>
                                         <td>{{ $file_type->name }}</td>
                                         <td>
@@ -115,7 +115,7 @@
 
                                         </td>
                                     </tr>
-                                
+
                             @endforeach
 
                         </tbody>
@@ -124,9 +124,7 @@
             </div>
             <!-- Export Datatable End -->
         </div>
-        <div class="footer-wrap pd-20 mb-20 card-box">
-            Copyright ©<?php echo date('Y'); ?>. Designed And Developed By Core Ocean Solutions LLP. All rights reserved.
-        </div>
+        @include('adminlayouts.footer')
     </div>
 @endsection
 

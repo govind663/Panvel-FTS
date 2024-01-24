@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\file_master;
-use App\Forward;
-use App\User;
-use App\status;
-use Auth;
-use Redirect;
+use App\Models\file_master;
+use App\Models\Forward;
+use App\Models\User;
+use App\Models\status;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use PDF;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class ForwardformController extends Controller
@@ -23,28 +23,28 @@ class ForwardformController extends Controller
         $department = User::orderBy('id', 'DESC')->get();
         $user = User::orderBy('id', 'DESC')->get();
         // $all_data_trx = Forward::get();
-        
+
         $all_data_trx = DB::select('SELECT
                                 fdt.id AS fdt_id,
                                 fdt.file_master_no fdt_file_master_no,
-                                
+
                                 fdt.user_login AS fdt_name_login,
                                 dpt_1.name AS fdt_department_login,
                                 fdt.tableno_login AS fdt_tableno_login,
-                                
+
                                 dpt_2.name AS forword_dept_name,
                                 users.name AS forword_to,
                                 fdt.fowto_table_no AS forword_table_no,
-                                
+
                                 fdt.method AS forword_method,
                                 fdt.Peon AS forword_peon,
-                                
+
                                 fdt.remark AS forword_remark,
                                 fdt.pdf AS forword_pdf,
                                 fdt.tipani_page AS forword_tipani_page,
                                 fdt.file_status AS file_fwd_status,
                                 fdt.inserted_dt AS forword_file_date
-                                
+
                             FROM
                                 forward_data_tbl AS fdt
                             JOIN department_tbl AS dpt_1 ON fdt.dept_login = dpt_1.id
@@ -56,19 +56,19 @@ class ForwardformController extends Controller
                             AND (fdt.inserted_by = "'.Auth::user()->id.'" OR fdt.forward_to = "'.Auth::user()->id.'")
                             ORDER BY fdt.`id` DESC
                                 ');
-                                
+
         $path = "https://".$_SERVER['HTTP_HOST']."/myfinalimg/";
 
         return view('Forward.forward', compact('data', 'forward', 'department', 'status', 'user', 'all_data_trx', 'path'));
     }
-    
-    
+
+
     public function create()
     {
         $user = User::orderBy('id', 'DESC')->get();
         return view('Forward.Forward_result', compact('user'));
     }
-    
+
     // Store Inword Form data
     public function store(Request $request) {
 
@@ -83,7 +83,7 @@ class ForwardformController extends Controller
             // 'tipani_page' => 'required',
             // 'inward_status' => 'required',
             'file_status' => 'required',
-          
+
         ],[
             // 'file_master_no.required' => 'File Master No. is required',
             'department_name.required' => 'Department Name is required',
@@ -96,7 +96,7 @@ class ForwardformController extends Controller
             // 'inward_status.required' => 'Inward Status is required.',
             'file_status.required' => 'File Status is required',
           ]);
-          
+
         $data = new Forward();
         if ($request->hasFile('pdf'))
         {
@@ -109,7 +109,7 @@ class ForwardformController extends Controller
             $data->pdf = $extension;
             //return $fileName;
         }
-        
+
         $data->file_master_no = $request->get('file_master_no');
         $data->department_name = $request->get('department_name');
         $data->forward_to = $request->get('forward_to');
@@ -126,20 +126,20 @@ class ForwardformController extends Controller
         $data->tableno_login =  $request->get('tableno_login');
         $data->file_fwd_status =  0;
         $data->save();
-        
-        
+
+
         $doc_no = DB::select('UPDATE file_master_tbl
                                 SET status = "'.$data->file_status.'", last_frw_by = "'.$data->inserted_by.'", current_user_id = "'.$data->forward_to.'",  modify_by = "'.$data->inserted_by.'", modify_dt = "'.$data->inserted_dt.'"
                                 WHERE file_master_no = "'.$data->file_master_no.'"
                             ');
         // $doc_no = DB::select('UPDATE file_master_tbl
-        //                         SET forward_to = "'.$data->forward_to.'", 
+        //                         SET forward_to = "'.$data->forward_to.'",
         //                         WHERE file_master_no = "'.$data->file_master_no.'"
         //                     ');
 
         return redirect()->route('Forwardform.index')->with('message', 'Your Record Added Successfully.');
     }
-    
+
     // public function show($id)
     // {
     //     //
@@ -168,7 +168,7 @@ class ForwardformController extends Controller
     //       'name.required' => 'Number of Tipani Pages is required',
     //       'method.required' => 'Method is required',
     //       'remark.required' => 'Remark / Tipani is required',
-           
+
     //       ]);
     //     $data = Forward::find($id);
     //     $data->department_name = $request->get('department_name');

@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="csrf-token" content="content">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    
+
     <!-- Title Start -->
     <title>पनवेल महानगरपालिका || FTS-Home</title>
 
@@ -52,7 +52,7 @@
 </head>
 
 <body>
-    
+
     <div class="header">
         <div class="header-left">
             <div class="menu-icon dw dw-menu"></div>
@@ -74,7 +74,7 @@
                     <div class="dropdown-menu dropdown-menu-right" style="background:#F1F3F4 ;">
                         <div class="notification-list mx-h-350 customscroll">
                             <ul>
-                                <?php
+                                @php
                                     $data1 = DB::select('SELECT
                                                                 users.id AS user_id,
                                                                 users.name AS user_name,
@@ -94,7 +94,8 @@
                                                                 ORDER BY logs.log_date DESC
                                                 ');
 
-                                ?>
+
+                                @endphp
 
                                 @foreach ($data1 as $key => $file_type)
                                     @if(!empty($file_type->user_id == Auth::user()->id ))
@@ -348,7 +349,7 @@
                             <span class="micon dw dw-house"></span><span class="mtext">Dashboard </span>
                         </a>
                     </li>
-                    
+
                     <li class="dropdown">
                         <a href="javascript:;" class="dropdown-toggle">
                             <span class="micon dw dw-settings"></span><span class="mtext">Setup</span>
@@ -363,7 +364,7 @@
                             <!--<li><a href="{{ url('document_numbering') }}">Document Numbering</a></li>-->
                         </ul>
                     </li>
-                    
+
                     <li class="dropdown">
                         <a href="javascript:;" class="dropdown-toggle">
                             <span class="micon dw dw-padlock"></span><span class="mtext">Master</span>
@@ -402,7 +403,7 @@
 
                     <?php } ?>
 
-                    
+
                     <?php
                        if($user_type == 'Peon'){
 
@@ -435,7 +436,7 @@
                             <li><a href="{{ url('Inward') }}">Inward</a></li>
                             <li><a href="{{ url('in_transit') }}">In Transit</a></li>
                             <li><a href="{{ url('Close') }}">Close</a></li>
-                            
+
                         </ul>
                     </li>
 

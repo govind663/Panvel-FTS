@@ -82,20 +82,9 @@
                             <h4 class="text-center text-primary">Login </h4>
                         </div>
 
-                        <form method="POST" action="{{ route('login.store') }}" content="{{ csrf_token() }}">
+                        <form method="POST" action="{{ route('login.store') }}" content="{{ csrf_token() }}"  enctype="multipart/form-data">
                             @csrf
 
-                            <!--<div class="form-group row">-->
-                            <!--    <label class="col-sm-4 col-form-label">Username <span class="text-danger">*</span></label>-->
-                            <!--    <div class="col-sm-8">-->
-                            <!--        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" autocomplete="name" autofocus>-->
-                            <!--        @error('name')-->
-                                <!--            <span class="invalid-feedback" role="alert">-->
-                                <!--                <strong>{{ $message }}</strong>-->
-                                <!--            </span>-->
-                            <!--        @enderror-->
-                            <!--    </div>-->
-                            <!--</div>-->
                             <div class="form-group row">
                                 <label for="email" class="col-sm-4 col-form-label"><i class="dw dw-email-2"></i>
                                     &nbsp;{{ __('E-Mail id') }} <span class="text-danger">*</span></label>
@@ -138,18 +127,6 @@
 
 							</div>
 
-                        <!--    <div class="row mb-3">-->
-                        <!--    <div class="col-md-6 offset-md-4">-->
-                        <!--        <div class="form-check">-->
-                        <!--            <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>-->
-
-                        <!--            <label class="form-check-label" for="remember">-->
-                        <!--                {{ __('Remember Me') }}-->
-                        <!--            </label>-->
-                        <!--        </div>-->
-                        <!--    </div>-->
-                        <!--</div>-->
-
 
                             <div class="row">
                                 <div class="col-sm-12">
@@ -162,32 +139,8 @@
                                             <i class="dw dw-share"></i>&nbsp;{{ __('Login') }}
                                         </button>
                                     </div>
-                                    <!--<div class="font-16 weight-600 pt-10 pb-10 text-center" data-color="#707373">OR</div>-->
-                                    <!--<div class="input-group mb-0">-->
-                                    <!--	<a class="btn btn-outline-primary btn-lg btn-block" href="{{ route('register') }}">Register To Create Account</a>-->
-                                    <!--</div>-->
                                 </div>
                             </div>
-
-                            <!--                   <div class="form-group row mb-0">-->
-                            <!--                       <div class="col-md-8 offset-md-4">-->
-                            <!--                           <div class="input-group mb-0">-->
-                            <!--<button type="submit" class="btn btn-primary  btn-lg btn-block">-->
-                            <!--    {{ __('Login') }}-->
-                            <!--</button>-->
-                            <!--</div>-->
-
-                            <!--<a class="btn btn-link"  href="{{ url('forget-password') }}">-->
-                            <!--    {{ __('Forgot Your Password?') }}-->
-                            <!--</a>-->
-
-                            <!--<br>-->
-                            <!--<div class="input-group mb-0">-->
-                            <!--    <a class="btn btn-outline-primary btn-lg btn-block" href="{{ route('register') }}">Register Account</a>-->
-                            <!--</div>-->
-                            <!--                       </div>-->
-
-                            <!--                   </div>-->
 
                         </form>
                     </div>

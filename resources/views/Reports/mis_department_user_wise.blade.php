@@ -20,7 +20,7 @@
                 </div>
             </div>
             @endforeach
-            
+
             <!-- Export Datatable start -->
             <div class="card-box mb-30">
                 <div class="pd-20">
@@ -46,15 +46,13 @@
                                         <td>{{ $emp_wise->transit }}</td>
                                         <td>{{ $emp_wise->closed }}</td>
                                     </tr>
-                                @endforeach 
+                                @endforeach
                         </tbody>
                     </table>
                 </div>
             </div>
             <!-- Export Datatable End -->
         </div>
-        <div class="footer-wrap pd-20 mb-20 card-box">
-            Copyright ©<?php echo date('Y'); ?>. Designed And Developed By Core Ocean Solutions LLP. All rights reserved.
-        </div>
+        @include('adminlayouts.footer')
     </div>
 @endsection

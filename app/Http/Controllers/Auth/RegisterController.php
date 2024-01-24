@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\User;
-use App\department;
+use App\Models\User;
+use App\Models\department;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -128,7 +128,7 @@ class RegisterController extends Controller
           'status.required' => 'Status is required',
           ]);
         $data = User::find($id);
-        
+
         $data->name = $request->get('name');
         $data->user_type = $request->get('user_type');
         $data->mobile_no = $request->get('mobile_no');

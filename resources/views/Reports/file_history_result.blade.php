@@ -5,7 +5,7 @@
             color: red;
         }
         .select2-container{
-         width:100%!important;   
+         width:100%!important;
         }
     </style>
     <div class="pd-ltr-20 xs-pd-20-10">
@@ -35,7 +35,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="pd-20 card-box mb-30">
                 <h4 class="text-blue h4">File History</h4>
                 <hr>
@@ -48,9 +48,9 @@
                             <input type="search" name="search" id="search" class="form-control" value=""
                                 placeholder="Enter File Master Number" required>
                         </div>
-                        
+
                     </div>
-                    
+
                     <div class="form-group row mt-4">
                         <label class="col-md-3"></label>
                         <div class="col-md-9" style="display: flex; justify-content: flex-end;">
@@ -72,7 +72,7 @@
                                 <div class="col-lg-3 p-2">
                                     <strong>File Number : &nbsp;&nbsp;</strong><span>{{ $file_type->file_master_no }}</span>
                                 </div>
-                                
+
                                 <div class="col-lg-3 p-2">
                                     <strong>File Type : &nbsp;&nbsp;</strong><span>{{ $file_type->type }}</span>
                                 </div>
@@ -89,7 +89,7 @@
                                 <div class="col-lg-3 p-2">
                                     <strong>Created by : &nbsp;&nbsp;</strong><span>{{ $file_type->created_by }}</span>
                                 </div>
-                                
+
                                 <div class="col-lg-3 p-2">
                                     <strong>Department : &nbsp;&nbsp;</strong><span>{{ $file_type->department_name }}</span>
                                 </div>
@@ -124,7 +124,7 @@
                                     <strong>File Detail / Tipani : </strong><br><span
                                         class="text-justify">{{ $file_type->file_detail }}</span>
                                 </div>
-                                
+
                                 <div class="col-lg-4 p-2">
                                     <strong>View File History : </strong>
                                     <a href="{{ url('file_master_log_history') }}/{{ $file_type->id }}" class="btn btn-info btn-lg">
@@ -137,16 +137,14 @@
                 @endforeach
             @endif
         </div>
-        <div class="footer-wrap pd-20 mb-20 card-box">
-            Copyright ©<?php echo date('Y'); ?>. Designed And Developed By Core Ocean Solutions LLP. All rights reserved.
-        </div>
+        @include('adminlayouts.footer')
     </div>
 @endsection
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     $(document).ready(function () {
-        
+
         $('#department_name').on('change', function () {
             var idCountry = this.value;
             $("#forward_to").html('');
@@ -168,7 +166,7 @@
                 }
             });
         });
-        
+
         $('#forward_to').on('change', function () {
             var idState = this.value;
             $("#fowto_table_no").html('');

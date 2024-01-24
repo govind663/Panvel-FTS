@@ -4,23 +4,23 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use Auth;
-use App\department;
-use App\file_master;
-use App\File_Type;
-use App\status;
-use App\table_no;
-use App\User;
-use App\Forward;
-use App\Inward;
-use App\Close;
-use App\document_numbering;
-use App\financial_year;
+use App\Models\department;
+use App\Models\file_master;
+use App\Models\File_Type;
+use App\Models\status;
+use App\Models\table_no;
+use App\Models\User;
+use App\Models\Forward;
+use App\Models\Inward;
+use App\Models\Close;
+use App\Models\document_numbering;
+use App\Models\financial_year;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\PDF;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-use Session;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 
 class file_masterController extends Controller
 {
@@ -40,7 +40,7 @@ class file_masterController extends Controller
                                     JOIN users ON file_master_tbl.last_frw_by=users.id
                                     WHERE file_master_tbl.deleted_at IS NULL
                                 ');
-        
+
         $data6 = DB::select('SELECT file_master_tbl.id, file_type_tbl.type, users.name, file_master_tbl.file_type,
                                 file_master_tbl.file_master_no, file_master_tbl.total_pages_of_tipani,
                                 file_master_tbl.total_pages_of_docs, file_master_tbl.subject,
@@ -48,19 +48,19 @@ class file_masterController extends Controller
                                 file_master_tbl.reference_no, file_master_tbl.reference_date, file_master_tbl.created_by,
                                 file_master_tbl.date, file_master_tbl.table_no,file_master_tbl.department,
                                 file_master_tbl.status, file_master_tbl.inserted_dt, file_master_tbl.inserted_by
-                                
+
                                 FROM `file_master_tbl`
                                 JOIN file_type_tbl ON file_master_tbl.file_type=file_type_tbl.id
                                 LEFT JOIN users ON file_master_tbl.current_user_id=users.id
-                                
+
                                 WHERE file_master_tbl.deleted_at IS NULL ORDER BY `id` DESC
                             ');
-                            
+
         // $datacreated;
         $path = "https://".$_SERVER['HTTP_HOST']."/myfinalimg/";
         // return $Standing;
-        
-        
+
+
 
         return view('File Master.grid', compact('data', 'path', 'data1', 'data2', 'data6'));
     }
@@ -70,11 +70,11 @@ class file_masterController extends Controller
         $file_type = File_Type::orderBy('id','asc')->where("status" , "Active")->pluck('type', 'id');
         $status = status::orderBy('id','asc')->pluck('name', 'id');
         $financial_year = financial_year::orderBy('id','asc')->pluck('name', 'id');
-        
+
         $document_numbering = DB::select('SELECT id as Doc_Id, Next_Doc_No from document_numbering_tbl where document_type = "File" AND financial_year = "14"');
         // $document_numbering = document_numbering::orderBy('id','asc')->pluck('Next_Doc_No', 'id');
-        
-        
+
+
 
         return view('File Master.create',compact('file_type', 'status', 'document_numbering', 'financial_year'));
     }
@@ -128,21 +128,21 @@ class file_masterController extends Controller
             $data->pdf = $extension;
             //return $fileName;
         }
-        
+
         //   $fy_year =  "SELECT name FROM `financial_year_tbl`
-        //                 where start_date <='".date('Y-m-d')."' And end_date >='".date('Y-m-d')."' 
+        //                 where start_date <='".date('Y-m-d')."' And end_date >='".date('Y-m-d')."'
         //                 ";
         //  $cur = $fy-ye
-        
-        // $current_financialyear = DB::select("SELECT t2.prefix 
-        //                                         FROM `financial_year_tbl` AS t1 
-        //                                         JOIN document_numbering_tbl AS t2 ON t1.id = t2.financial_year 
+
+        // $current_financialyear = DB::select("SELECT t2.prefix
+        //                                         FROM `financial_year_tbl` AS t1
+        //                                         JOIN document_numbering_tbl AS t2 ON t1.id = t2.financial_year
         //                                     ");
-                                            
-        // $current_financialyear = document_numbering::orderBy('id','asc')->pluck('prefix');    
-        
+
+        // $current_financialyear = document_numbering::orderBy('id','asc')->pluck('prefix');
+
         // return $current_financialyear;
-        
+
         $data->file_type = $request->get('file_type');
             $data->total_pages_of_tipani = $request->get('total_pages_of_tipani');
             $data->total_pages_of_docs = $request->get('total_pages_of_docs');
@@ -171,8 +171,8 @@ class file_masterController extends Controller
                                   WHERE id = "'.$Doc_id.'"
                                  ');
             session(['file_master_msg' => 'File Master Number is : '.$data->file_master_no.' ']);
-        
-        
+
+
         return redirect()->route('file_master.index')->with('message', 'Your File Added Successfully.');
     }
 
@@ -356,8 +356,8 @@ class file_masterController extends Controller
 
         return redirect()->route('file_master.index')->with('message', 'Your File Deleted Successfully.');
     }
-    
-    
+
+
     public function File_Master_Log_History($id)
     {
         $data = file_master::find($id);
@@ -444,10 +444,10 @@ class file_masterController extends Controller
         $status = status::orderBy('id','asc')->pluck('name', 'id');
         //return $status;
         $document_numbering = document_numbering::orderBy('id','asc')->pluck('Next_Doc_No', 'id');
-        
+
         $path = "https://".$_SERVER['HTTP_HOST']."/myfinalimg/";
         // return $path;
-        
+
         $financial_year = financial_year::orderBy('id','asc')->pluck('name', 'id');
         //return $data;
 

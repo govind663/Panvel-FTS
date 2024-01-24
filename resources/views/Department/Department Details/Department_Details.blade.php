@@ -69,7 +69,7 @@
                                     @else
                                        <td>{{date('d F, Y',strtotime($file_type->inserted_dt)) }}</td>
                                     @endif
-                                    
+
                                     {{-- <td>{{ $file_type->modify_dt }} <br> {{ $file_type->name }}</td> --}}
                                     <td>{{ \Carbon\Carbon::parse($file_type->modify_dt)->diffForHumans() }}</td>
                                 </tr>
@@ -81,8 +81,6 @@
             </div>
             <!-- Export Datatable End -->
         </div>
-        <div class="footer-wrap pd-20 mb-20 card-box">
-            Copyright ©<?php echo date('Y'); ?>. Designed And Developed By Core Ocean Solutions LLP. All rights reserved.
-        </div>
+        @include('adminlayouts.footer')
     </div>
 @endsection

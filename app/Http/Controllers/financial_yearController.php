@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\financial_year;
-use Redirect;
+use App\Models\financial_year;
+use Illuminate\Support\Facades\Redirect;
 use PDF;
-use DB;
-use Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class financial_yearController extends Controller
@@ -16,7 +16,7 @@ class financial_yearController extends Controller
     {
         $data = DB::select('SELECT * FROM `financial_year_tbl` WHERE deleted_at IS NULL ORDER BY `financial_year_tbl`.`name` DESC');
         // return $Standing;
-        
+
         return view('Financial-Year.grid', compact('data'));
     }
 
@@ -43,7 +43,7 @@ class financial_yearController extends Controller
         $data->status = $request->get('status');
         $data->start_date = $request->get('start_date');
         $data->end_date = $request->get('end_date');
-        $data->inserted_dt = date("Y-m-d H:i:s"); 
+        $data->inserted_dt = date("Y-m-d H:i:s");
         $data->inserted_by = Auth::user()->id;
         $data->save();
 
@@ -93,7 +93,7 @@ class financial_yearController extends Controller
         $data->deleted_by = Auth::user()->id;
         $data->deleted_at = date("Y-m-d H:i:s");
         $data->update();
-        
+
         return redirect()->route('financial_year.index')->with('message', 'Your Record Deleted Successfully.');
     }
 }

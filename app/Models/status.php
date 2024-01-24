@@ -1,12 +1,15 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+Use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Haruncpi\LaravelUserActivity\Traits\Loggable;
+
 class status extends Model
 {
-    use SoftDeletes;
+    use HasFactory, SoftDeletes, Loggable;
 
     protected $table='status_tbl';
     public $timestamps=false;

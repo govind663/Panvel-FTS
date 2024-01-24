@@ -4,7 +4,7 @@
 <head>
     <!-- Basic Page Info -->
     <meta charset="utf-8">
-    
+
     <title>पनवेल महानगरपालिका || FTS-Register</title>
 
     <!-- Site favicon -->
@@ -18,7 +18,7 @@
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
+
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="{{ url('/') }}/assets/vendors/styles/core.css">
     <link rel="stylesheet" type="text/css" href="{{ url('/') }}/assets/vendors/styles/icon-font.min.css">
@@ -72,8 +72,7 @@
                             <h4 class="text-center text-primary">उल्हासनगर महानगरपालिका - FTS </h4>
                             <h4 class="text-center text-primary">Register</h4>
                         </div>
-                        <form class="tab-wizard2 wizard-circle wizard" method="POST"
-                            action="{{ route('register') }}">
+                        <form class="tab-wizard2 wizard-circle wizard" method="POST" action="{{ route('register') }}">
                             @csrf
                             <section>
                                 <div class="form-wrap max-width-600 mx-auto">
@@ -147,12 +146,12 @@
                                 </div>
                             </section>
                         </form>
-                    </div>    
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    
+
     <!-- js -->
     <script src="{{ url('/') }}/assets/vendors/scripts/core.js"></script>
     <script src="{{ url('/') }}/assets/vendors/scripts/script.min.js"></script>

@@ -41,9 +41,9 @@
                                 placeholder="Enter File No.">
                                 <!--<input type="hidden" name="curr_user" id="curr_user" class="form-control " value="{{ Auth::user()->id }}">-->
                         </div>
-                        
+
                     </div>
-                    
+
                     <div class="form-group row mt-4">
                         <label class="col-md-3"></label>
                         <div class="col-md-9" style="display: flex; justify-content: flex-end;">
@@ -53,10 +53,8 @@
                     </div>
                 </form>
             </div>
-            
+
         </div>
-        <div class="footer-wrap pd-20 mb-20 card-box">
-            Copyright ©<?php echo date('Y'); ?>. Designed And Developed By Core Ocean Solutions LLP. All rights reserved.
-        </div>
+        @include('adminlayouts.footer')
     </div>
 @endsection

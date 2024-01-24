@@ -18,11 +18,11 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="pd-20 card-box mb-30">
                 <form method="POST" action="{{ Url('search/user/list') }}" class="form-horizontal"  enctype="multipart/form-data" >
                     {{ csrf_field() }}
-        
+
                     <div class="form-group row mt-3">
                         <label class="col-sm-2"><strong>From Date :<span style="color:red;"> *</span></strong></label>
                         <div class="col-sm-4 col-md-4">
@@ -33,7 +33,7 @@
                                 </span>
                             @endif
                         </div>
-                        
+
                         <label class="col-sm-2"><strong>To Date :<span style="color:red;"> *</span></strong></label>
                         <div class="col-sm-4 col-md-4">
                             <input type="date" name="to_date" id="to_date" class="form-control @error('to_date') is-invalid @enderror" required value="" placeholder="Enter To Date.">
@@ -68,7 +68,7 @@
                             <button type="submit" class="btn btn-success ">Submit</button>
                         </div>
                     </div>
-        
+
                 </form>
             </div>
             <!-- Export Datatable start -->
@@ -76,7 +76,7 @@
                 <div class="pd-20">
                     <h4 class="text-blue h4"> MIS Employee Wise List</h4>
                 </div>
-                
+
                 <div class="pb-20">
                     <table class="table hover multiple-select-row data-table-export nowrap">
                         <thead>
@@ -112,21 +112,21 @@
                                         @endif
                                     </span>
                                 </td>
-                                
-                                
+
+
                                 @if (!empty($emp_wise->emp_inserted_date ))
                                 <td width="10%">{{ $emp_wise->emp_inserted_date }}</td>
                                 @else
                                    <td width="10%">NULL</td>
                                 @endif
-                                
-                                
+
+
                                 @if (!empty($emp_wise->emp_close_dt))
                                 <td width="10%">{{ $emp_wise->emp_close_dt }}</td>
                                 @else
                                    <td width="10%">NULL</td>
                                 @endif
-                                
+
                                 @if (!empty($emp_wise->total_days))
                                 <td width="10%">{{ $emp_wise->total_days }}</td>
                                 @else
@@ -144,8 +144,6 @@
             </div>
             <!-- Export Datatable End -->
         </div>
-        <div class="footer-wrap pd-20 mb-20 card-box">
-            Copyright ©<?php echo date('Y'); ?>. Designed And Developed By Core Ocean Solutions LLP. All rights reserved.
-        </div>
+        @include('adminlayouts.footer')
     </div>
 @endsection

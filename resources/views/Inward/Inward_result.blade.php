@@ -5,7 +5,7 @@
             color: red;
         }
         .select2-container{
-         width:100%!important;   
+         width:100%!important;
         }
     </style>
     <div class="pd-ltr-20 xs-pd-20-10">
@@ -36,7 +36,7 @@
                 </div>
             </div>
 
-           
+
                 <div class="pd-20 card-box mb-30">
                         <h4 class="text-blue h4">File Inward</h4>
                         <hr>
@@ -73,7 +73,7 @@
                                 <div class="col-lg-3 p-2">
                                     <strong>File Number : &nbsp;&nbsp;</strong><span>{{ $file_type->file_master_no }}</span>
                                 </div>
-                                
+
                                 <div class="col-lg-3 p-2">
                                     <strong>File Type : &nbsp;&nbsp;</strong><span>{{ $file_type->type }}</span>
                                 </div>
@@ -93,11 +93,11 @@
                                 <div class="col-lg-3 p-2">
                                     <strong>Department : &nbsp;&nbsp;</strong><span>{{ $file_type->department_name }}</span>
                                 </div>
-                                
+
                                 <div class="col-lg-3 p-2">
                                     <strong>Table : &nbsp;&nbsp;</strong><span>{{ $file_type->table_no }}</span>
                                 </div>
-                                
+
                                 <div class="col-lg-3 p-2">
                                     <strong>Status : &nbsp;&nbsp;</strong>
                                     <span>
@@ -137,7 +137,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="pd-20 card-box mb-30">
                         <div class="row p-2">
                             <div class="col-lg-3">
@@ -154,7 +154,7 @@
                                     @if($forward->isNotEmpty() )
                                         <form method="post" action="{{ url('Inwardform') }}" class="form-horizontal pt-3" enctype="multipart/form-data" autocomplete="off">
                                     {{ csrf_field() }}
-                                    
+
                                     <input type="hidden" name="inserted_by" id="inserted_by" class="form-control " value="{{ Auth::user()->id }}">
                                     <input type="hidden" name="user_login" id="user_login" class="form-control " value="{{ Auth::user()->name }}">
                                     <input type="hidden" name="dept_login" id="dept_login" class="form-control " value="{{ Auth::user()->department }}">
@@ -167,9 +167,9 @@
                                     <input type="hidden"  name="from_person" id="from_person" class="form-control " value="{{$file_type->user_login}}">
                                     <input type="hidden"  name="from_dept" id="from_dept" class="form-control " value="{{$file_type->dept_login}}">
                                     <input type="hidden"  name="from_table_no" id="from_table_no" class="form-control " value="{{$file_type->tableno_login}}">
-                                       
+
                                     @endforeach
-                                    
+
 
                                     <div class="form-group row mt-3">
                                         <label class="col-sm-2 pt-2"><strong>Method&nbsp;&nbsp; : <span class="text-danger">*</span> &nbsp;&nbsp;</strong></label>
@@ -189,7 +189,7 @@
                                                 </span>
                                             @endif
                                         </div>
-                                        
+
                                         <label class="col-sm-2 pt-2"><strong>Inward File Status&nbsp;&nbsp; : <span class="text-danger">*</span> &nbsp;&nbsp;</strong></label>
                                         <div class="col-sm-4 col-md-4">
                                             <select class="custom-select2 form-control @error('file_status') is-invalid @enderror" name="file_status" id="file_status">
@@ -216,7 +216,7 @@
                                                 </span>
                                             @endif
                                         </div>
-                                        
+
                                         <label class="col-sm-2"><strong>Number of Tipani Pages &nbsp;&nbsp; :
                                                 &nbsp;</strong></label>
                                         <div class="col-sm-4 col-md-4">
@@ -230,9 +230,9 @@
                                             @endif
                                         </div>
                                     </div>
-                                    
+
                                     <div class="form-group row mt-3">
-                                        
+
                                         <?php
                                             $data = DB::select('SELECT
                                                                     users.id,
@@ -260,7 +260,7 @@
                                     </div>
 
                                     <div class="form-group row mt-3">
-                                        
+
                                         <label class="col-sm-2"><strong>Remark / Tipani&nbsp;&nbsp; : <span class="text-danger">*</span>&nbsp;</strong></label>
                                         <div class="col-sm-12 col-md-12">
                                             <textarea type="text" name="remark"
@@ -280,27 +280,27 @@
                                         <div class="col-md-9" style="display: flex; justify-content: flex-end;">
                                             <!--<a href="{{ url('department') }}" class="btn btn-danger">Cancel</a>&nbsp;&nbsp;-->
                                                 <button type="submit" class="btn btn-success">Submit</button>
-                                            
+
                                         </div>
                                     </div>
-                            
+
                                 </form>
                                     @else
                                         <p>Either You Have Already Accepted The File OR You Don't Have Access To This File.</p>
                                     @endif
-                                    
+
                                 @else
                                     <p>The File Is Closed !!</p>
                                 @endif
-                                
+
                             </div>
                         </div>
                     </div>
-                    
+
                 @endforeach
                 <!-- Export Datatable End -->
             @else
-                
+
                 <div class="card-box pd-20 height-100-p mb-30">
                     <div class="row align-items-center">
                         <div class="col-md-4">
@@ -327,9 +327,7 @@
         </div>
 
         <br><br>
-        <div class="footer-wrap pd-20 mb-20 card-box">
-            Copyright ©<?php echo date('Y'); ?>. Designed And Developed By Core Ocean Solutions LLP. All rights reserved.
-        </div>
+        @include('adminlayouts.footer')
     </div>
 @endsection
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

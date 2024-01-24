@@ -63,7 +63,6 @@ Route::group(['middleware' => ['auth']], function() {
 
     /* ---------------------------------------Setup start here.----------------------------------- */
     Route::resource('/user', 'Auth\RegisterController');
-    Route::resource('/Authentication', 'AuthenticationController');
     Route::resource('/financial_year', 'financial_yearController');
     Route::resource('/department', 'departmentController');
     Route::resource('/status', 'statusController');

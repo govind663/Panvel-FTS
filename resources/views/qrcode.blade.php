@@ -4,7 +4,7 @@
 <head>
     <!-- Basic Page Info -->
     <meta charset="utf-8">
-    <title>UMC-File Tracking System</title>
+    <title>PMC-File Tracking System</title>
 
     <!-- Site favicon -->
     <link rel="apple-touch-icon" sizes="180x180"
@@ -46,7 +46,7 @@
 <body>
     <div class="pd-ltr-20 xs-pd-20-10">
         <div class="min-height-200px">
-            
+
             <div class="page-header">
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
@@ -58,7 +58,7 @@
                     </div>
                     <div class="col-md-6 col-sm-12 text-right">
                         <button class="btn btn-primary" onclick="window.print()" role="button">
-                            <span class="micon fa fa-print" aria-hidden="true"></span> Print 
+                            <span class="micon fa fa-print" aria-hidden="true"></span> Print
                         </button>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
                 @foreach ($data as $key => $file_type)
                     <div class="row justify-content-between">
                         <div class="col-sm-8  ">
-                            <h2 class="p-3 text-justify"> उल्हासनगर महानगरपालिका  </h2>
+                            <h2 class="p-3 text-justify"> पनवेल महानगरपालिका  </h2>
                             <h3 class="p-3 text-justify">{{ $file_type->name }}</h3>
                             <h4 class="p-3 text-justify">
                                 {{ $file_type->subject }}<br>
@@ -108,7 +108,7 @@
     <script src="{{ url('/') }}/assets/vendors/scripts/script.min.js"></script>
     <script src="{{ url('/') }}/assets/vendors/scripts/process.js"></script>
     <script src="{{ url('/') }}/assets/vendors/scripts/layout-settings.js"></script>
-    <script type="text/javascript" src="js/jquery.printPage.js"></script>
+    <script type="text/javascript" src="{{ url('/') }}/js/jquery.printPage.js"></script>
 </body>
 
 </html>

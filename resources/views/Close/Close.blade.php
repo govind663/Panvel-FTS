@@ -43,7 +43,7 @@
                     </div>
                 </form>
             </div>
-            
+
             <!--<div class="pd-20 card-box mb-30">-->
             <!--    <form method="post" action="{{ url('#') }}" class="form-horizontal" enctype="multipart/form-data">-->
             <!--        {{ csrf_field() }}-->
@@ -58,7 +58,7 @@
             <!--                    </span>-->
             <!--                @endif-->
             <!--            </div>-->
-                        
+
             <!--            <label class="col-sm-2"><strong>Number of Tipani Pages &nbsp;&nbsp; : &nbsp;<span class="text-danger">*</span></strong></label>-->
             <!--            <div class="col-sm-4 col-md-4">-->
             <!--                <input type="text" name="name" id="name" class="form-control  @error('name') is-invalid @enderror" value="" placeholder="Enter Number of Tipani Pages.">-->
@@ -136,7 +136,7 @@
             <!--            </div>-->
             <!--        </div>-->
             <!--</div>-->
-            
+
             <!--<div class="pd-20 card-box mb-30">-->
             <!--    <div class="title">-->
             <!--        <h4 class="text-primary">Forwarding History : </h4>-->
@@ -203,8 +203,6 @@
             <!-- Export Datatable End -->
 
         </div>
-        <div class="footer-wrap pd-20 mb-20 card-box">
-            Copyright ©<?php echo date('Y'); ?>. Designed And Developed By Core Ocean Solutions LLP. All rights reserved.
-        </div>
+        @include('adminlayouts.footer')
     </div>
 @endsection

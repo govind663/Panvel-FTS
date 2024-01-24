@@ -39,9 +39,9 @@
                             <input type="search" name="search" id="search" class="form-control" value=""
                                 placeholder="Enter File No." required>
                         </div>
-                        
+
                     </div>
-                    
+
                     <div class="form-group row mt-4">
                         <label class="col-md-3"></label>
                         <div class="col-md-9" style="display: flex; justify-content: flex-end;">
@@ -51,8 +51,8 @@
                     </div>
                 </form>
             </div>
-            
-            
+
+
 
             <!-- Export Datatable start -->
             <div class="pd-20 card-box mb-30">
@@ -98,15 +98,15 @@
                                 @else()
                                     <td>Partially Completed</td>
                                 @endif
-    
+
                                 <td>{{ $datafwd->fdt_name_login  }}</td>
                                 <td>{{ $datafwd->fdt_department_login  }}</td>
                                 <td>{{ $datafwd->fdt_tableno_login  }}</td>
-    
+
                                 <td>{{ $datafwd->forword_to }}</td>
                                 <td>{{ $datafwd->forword_dept_name  }}</td>
                                 <td> {{ $datafwd->forword_table_no  }} </td>
-    
+
                                 <td>{{ $datafwd->forword_method }}/ {{ $datafwd->forword_peon }}</td>
                                 <td>{{ $datafwd->forword_tipani_page  }}</td>
                                 @if (!empty($datafwd->forword_pdf))
@@ -126,8 +126,6 @@
             <!-- Export Datatable End -->
 
         </div>
-        <div class="footer-wrap pd-20 mb-20 card-box">
-            Copyright ©<?php echo date('Y'); ?>. Designed And Developed By Core Ocean Solutions LLP. All rights reserved.
-        </div>
+        @include('adminlayouts.footer')
     </div>
 @endsection

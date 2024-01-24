@@ -5,7 +5,7 @@
             color: red;
         }
 .select2-container{
- width:100%!important;   
+ width:100%!important;
 }
     </style>
     <div class="pd-ltr-20 xs-pd-20-10">
@@ -35,7 +35,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="pd-20 card-box mb-30">
                 <h4 class="text-blue h4">File Forward</h4>
                 <hr>
@@ -70,7 +70,7 @@
                                 <div class="col-lg-3 p-2">
                                     <strong>File Number : &nbsp;&nbsp;</strong><span>{{ $file_type->file_master_no }}</span>
                                 </div>
-                                
+
                                 <div class="col-lg-3 p-2">
                                     <strong>File Type : &nbsp;&nbsp;</strong><span>{{ $file_type->type }}</span>
                                 </div>
@@ -87,7 +87,7 @@
                                 <div class="col-lg-3 p-2">
                                     <strong>Created by : &nbsp;&nbsp;</strong><span>{{ $file_type->created_by }}</span>
                                 </div>
-                                
+
                                 <div class="col-lg-3 p-2">
                                     <strong>Department : &nbsp;&nbsp;</strong><span>{{ $file_type->department_name }}</span>
                                 </div>
@@ -139,26 +139,26 @@
                                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                                         <strong>Success!</strong> {{ Session::get('flash_message') }}.
                                     </div>
-        
+
                                 </div>
                             @endif
                             <div class="col-lg-12">
                                 <strong class="text-primary">Subject&nbsp;&nbsp; : &nbsp;&nbsp;</strong><span>{{ $file_type->subject }}</span>
                                 <hr>
                                 @if ($file_type->status != '14' && $file_type->current_user_id == Auth::user()->id )
-                                
+
                                     @if($forward->isNotEmpty() && $file_type->status != '12')
                                         <form method="post" action="{{ url('Forwardform') }}" class="form-horizontal pt-3" enctype="multipart/form-data"  accept-charset="utf-8" autocomplete="off">
                                     {{ csrf_field() }}
-                                    
-                                    
+
+
                                     <input type="hidden" name="inserted_by" id="inserted_by" class="form-control " value="{{ Auth::user()->id }}">
                                     <input type="hidden" name="user_login" id="user_login" class="form-control " value="{{ Auth::user()->name }}">
                                     <input type="hidden" name="dept_login" id="dept_login" class="form-control " value="{{ Auth::user()->department }}">
                                     <input type="hidden" name="tableno_login" id="tableno_login" class="form-control " value="{{ Auth::user()->table_no }}">
-                                    
-                               
-                                
+
+
+
                                     @foreach ($posts as $key => $file_type)
                                             <input type="hidden"  name="file_master_no" id="file_master_no" class="form-control " value="{{ $file_type->file_master_no }}">
                                     @endforeach
@@ -183,7 +183,7 @@
                                         <label class="col-sm-2 pt-2"><strong>Forward To&nbsp;&nbsp; : <span class="text-danger">*</span>&nbsp;&nbsp;</strong></label>
                                         <div class="col-sm-4 col-md-4">
                                             <select class="custom-select2 form-control @error('forward_to') is-invalid @enderror" name="forward_to" id="forward_to">
-                                                
+
                                             </select>
                                             @if ($errors->has('forward_to'))
                                                 <span class="err">
@@ -203,7 +203,7 @@
                                                 </span>
                                             @endif
                                         </div>
-                                        
+
                                         <label class="col-sm-2"><strong>Page Count of Uploaded File &nbsp;&nbsp; :  &nbsp;</strong></label>
                                         <div class="col-sm-4 col-md-4">
                                             <input type="text" name="tipani_page" id="tipani_page" class="form-control  @error('tipani_page') is-invalid @enderror" value="{{ old('tipani_page') }}"
@@ -215,12 +215,12 @@
                                             @endif
                                         </div>
                                     </div>
-                                    
+
                                     <div class="form-group row mt-3">
                                         <label class="col-sm-2"><strong>Table No. &nbsp;&nbsp; : <span class="text-danger">*</span>&nbsp;</strong></label>
                                         <div class="col-sm-4 col-md-4">
                                             <select class="custom-select2 form-control @error('fowto_table_no') is-invalid @enderror" name="fowto_table_no" id="fowto_table_no">
-                                                
+
                                             </select>
                                             @if ($errors->has('fowto_table_no'))
                                                 <span class="err">
@@ -228,7 +228,7 @@
                                                 </span>
                                             @endif
                                         </div>
-                                        
+
                                         <label class="col-sm-2 pt-2"><strong>Forward File Status&nbsp;&nbsp; : <span class="text-danger">*</span>&nbsp;&nbsp;</strong></label>
                                         <div class="col-sm-4 col-md-4">
                                             <select class="custom-select2 form-control @error('file_status') is-invalid @enderror" name="file_status" id="file_status">
@@ -244,7 +244,7 @@
                                             @endif
                                         </div>
                                     </div>
-                                    
+
                                     <div class="form-group row mt-3">
                                         <label class="col-sm-2 pt-2"><strong>Method&nbsp;&nbsp; : <span class="text-danger">*</span>&nbsp;&nbsp;</strong></label>
                                         <div class="col-sm-4 col-md-4">
@@ -263,7 +263,7 @@
                                                 </span>
                                             @endif
                                         </div>
-                                        
+
                                         <?php
                                             $data = DB::select('SELECT
                                                                     users.id,
@@ -279,7 +279,7 @@
                                         ?>
                                         <div class="col-sm-6 col-md-6 Peon box" style="display: none;">
                                             <input type="text" name="Peon" id="Peon" class="form-control  " value="" placeholder="Enter Peone Name">
-                                            
+
                                             <!--<select class="custom-select2 form-control" name="Peon" id="Peon">-->
                                             <!--    <option value=" ">&nbsp;&nbsp;Please Select Peon</option>-->
                                             <!--    <optgroup label="">-->
@@ -290,9 +290,9 @@
                                             <!--</select>-->
                                         </div>
                                     </div>
-                                    
+
                                     <div class="form-group row mt-3">
-                                        
+
                                         <label class="col-sm-2"><strong>Remark / Tipani&nbsp;&nbsp; : <span class="text-danger">*</span>&nbsp;</strong></label>
                                         <div class="col-sm-12 col-md-12">
                                             <textarea type="text" name="remark"
@@ -325,7 +325,7 @@
                                         <p>It Seems You Are Not Currently In Hold Of The File</p>
                                     @endif
                                 @endif
-                                
+
                             </div>
                         </div>
                     </div>
@@ -354,16 +354,14 @@
                 </div>
             @endif
         </div>
-        <div class="footer-wrap pd-20 mb-20 card-box">
-            Copyright ©<?php echo date('Y'); ?>. Designed And Developed By Core Ocean Solutions LLP. All rights reserved.
-        </div>
+        @include('adminlayouts.footer')
     </div>
 @endsection
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     $(document).ready(function () {
-        
+
         $('#department_name').on('change', function () {
             var idCountry = this.value;
             $("#forward_to").html('');
@@ -385,7 +383,7 @@
                 }
             });
         });
-        
+
         $('#forward_to').on('change', function () {
             var idState = this.value;
             $("#fowto_table_no").html('');

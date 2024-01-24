@@ -2,18 +2,6 @@
 @section('content')
 
     <div class="pd-ltr-20">
-        <!--<div class="row">-->
-        <!--    @if (Session::has('message'))-->
-        <!--        <div class=" col-sm-12">-->
-        <!--            <div class="alert alert-success alert-dismissible">-->
-        <!--                <a href="#" class="close" data-dismiss="alert"-->
-        <!--                    aria-label="close">&times;</a>-->
-        <!--                <strong>Congratulation...!!</strong> {{ Session::get('message') }}.-->
-        <!--            </div>-->
-        <!--        </div>-->
-        <!--    @endif-->
-        <!--</div>-->
-
 
         <div class="page-header">
             <div class="row">
@@ -64,8 +52,6 @@
             @endforeach
         </div>
 
-        <div class="footer-wrap pd-20 mb-20 card-box">
-            Copyright ©<?php echo date('Y'); ?>. Designed And Developed By Core Ocean Solutions LLP. All rights reserved.
-        </div>
+        @include('adminlayouts.footer')
     </div>
 @endsection

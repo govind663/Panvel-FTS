@@ -12,8 +12,7 @@ class LoginController extends Controller
 {
     public function login()
     {
-
-      return view('auth.login');
+        return view('auth.login');
     }
 
     public function authenticate(Request $request)
@@ -35,10 +34,10 @@ class LoginController extends Controller
         //           FROM users
         //           WHERE email ="'.$email_str.'"
         //           AND users.deleted_at IS NULL
-        //             '); 
+        //             ');
 
        $res = DB::table('users')->where('email', "'.$email_str.'")->pluck('user_type')->first();
-        
+
         $credentials = $request->only('email', 'password');
         $remember_me = $request->has('remember_token') ? true : false;
         // $user = Auth::user()->user_type;
@@ -51,9 +50,9 @@ class LoginController extends Controller
             $user_password = Auth::user()->password;
             $user_deleted_at = Auth::user()->deleted_at;
             $res = DB::table('users')->where('email', "'.$email_str.'")->pluck('user_type')->first();
-            
+
             return redirect()->intended('index')->with('message', 'You are login successful.');
-            
+
             // $checkuser = User::where('email', '=', $request->input('email'))->first();
             //Last Date 23 May
             // if ($user_deleted_at == " " || $user_type == $res) {
@@ -61,7 +60,7 @@ class LoginController extends Controller
             // }else{
             //     return redirect('login')->with('info', 'Your records not exist our database..!!');
             // }
-            
+
         }
         else{
             return redirect()->back()->with(['Input' => $request->only('email', 'remember'), 'error' => 'Your Email and Password do not match our records!']);

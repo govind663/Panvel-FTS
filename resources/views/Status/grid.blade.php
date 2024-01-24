@@ -57,7 +57,7 @@
                                 <tr>
                                     <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $key + 1 }}</th>
                                     <td>{{ $file_type->name }}</td>
-                                    
+
                                     @if ($file_type->status == 'Active')
                                         <td>
                                             <span class="badge bg-success tips text-light" data-bs-toggle="popover" title="Active">
@@ -98,9 +98,7 @@
             </div>
             <!-- Export Datatable End -->
         </div>
-        <div class="footer-wrap pd-20 mb-20 card-box">
-            Copyright ©<?php echo date('Y'); ?>. Designed And Developed By Core Ocean Solutions LLP. All rights reserved.
-        </div>
+        @include('adminlayouts.footer')
     </div>
 @endsection
 

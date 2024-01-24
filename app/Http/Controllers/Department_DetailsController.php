@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Redirect;
 use PDF;
-use App\department;
-use App\file_master;
+use App\Models\department;
+use App\Models\file_master;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
@@ -29,8 +29,8 @@ class Department_DetailsController extends Controller
                                     AND file_master_tbl.status != 14
                                     AND file_master_tbl.department = '.$id.'
                         ');
-                        
-        
+
+
 
         // return $data1;
         $department = department::where('id', $id)->orderBy('id', 'DESC' )->get();

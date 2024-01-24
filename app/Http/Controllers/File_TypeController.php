@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\File_Type;
-use App\file_master;
+use App\Models\File_Type;
+use App\Models\file_master;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\PDF;
 use Illuminate\Support\Facades\DB;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class File_TypeController extends Controller

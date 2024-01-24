@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\department;
-use App\file_master;
-use Redirect;
+use App\Models\department;
+use App\Models\file_master;
+use Illuminate\Support\Facades\Redirect;
 use PDF;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -39,9 +39,9 @@ class HomeController extends Controller
             AND fmt.status != 14
             GROUP by dpt.id, dpt.name, dpt.inserted_by
             ORDER BY dpt.id ASC');
-            
+
             // return $data;
-            
+
             return view('index', compact('data'));
         }
         return redirect("login");

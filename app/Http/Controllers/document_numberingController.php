@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\document_numbering;
-use App\financial_year;
-use App\organization;
+use App\Models\document_numbering;
+use App\Models\financial_year;
+use App\Models\organization;
 use Redirect;
 use PDF;
-use DB;
-use Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class document_numberingController extends Controller
@@ -18,17 +18,17 @@ class document_numberingController extends Controller
     {
         //$data = DB::select('SELECT * FROM `document_numbering_tbl` WHERE deleted_at IS NULL ORDER BY `id` DESC');
         $data = DB::select ('SELECT dnt.*, fyt.name  as financial_year, ot.name  as company
-        
-                             FROM document_numbering_tbl as dnt 
-                             
+
+                             FROM document_numbering_tbl as dnt
+
                              left JOIN financial_year_tbl as fyt on fyt.id = dnt.financial_year
-                             left JOIN organization_tbl as ot on ot.id = dnt.company  
-                             
+                             left JOIN organization_tbl as ot on ot.id = dnt.company
+
                              WHERE dnt.deleted_at IS NULL
                              ORDER BY `dnt`.`id` ASC
                             ');
         // return $data;
-        
+
         return view('Document Numbering.grid', compact('data'));
     }
 
@@ -36,7 +36,7 @@ class document_numberingController extends Controller
     {
         $financial_year = financial_year::orderBy('id','asc')->pluck('name', 'id');
         $organization = organization::orderBy('id', 'asc')->pluck('name', 'id');
-        
+
         return view('Document Numbering.create', compact('financial_year', 'organization'));
     }
 
@@ -63,7 +63,7 @@ class document_numberingController extends Controller
            'End_Doc_No.required' => 'End Document Number is required',
            'status.required' => 'Status is required',
           ]);
-          
+
         $data = new document_numbering();
         $data->name = $request->get('name');
         $data->company = $request->get('company');
@@ -91,10 +91,10 @@ class document_numberingController extends Controller
     {
         $data = document_numbering::find($id);
         $financial_year = financial_year::orderBy('id','asc')->pluck('name', 'id');
-        $organization = organization::orderBy('id', 'asc')->pluck('name', 'id');  
+        $organization = organization::orderBy('id', 'asc')->pluck('name', 'id');
         // return $financial_year;
         // return $organization;
-        
+
         return view('Document Numbering.edit', compact('data', 'financial_year', 'organization'));
     }
 
@@ -145,7 +145,7 @@ class document_numberingController extends Controller
         $data->deleted_by = Auth::user()->id;
         $data->deleted_at = date("Y-m-d H:i:s");
         $data->update();
-        
+
         return redirect()->route('document_numbering.index')->with('message', 'Your Record Deleted Successfully.');
     }
 }

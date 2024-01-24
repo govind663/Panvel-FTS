@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\organization;
-use Redirect;
+use App\Models\organization;
+use Illuminate\Support\Facades\Redirect;
 use PDF;
-use DB;
-use Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class organizationController extends Controller
@@ -17,7 +17,7 @@ class organizationController extends Controller
         $data = DB::select('SELECT * FROM `organization_tbl` WHERE deleted_at IS NULL ORDER BY `id` DESC');
         $path="https://".$_SERVER['HTTP_HOST']."/umc-fts/image/";
         // return $Standing;
-        
+
         return view('Organization.grid', compact('data', 'path'));
     }
 
@@ -37,7 +37,7 @@ class organizationController extends Controller
            'status.required' => 'Organization Status is required',
            'logo.required' => 'Organization logo is required',
           ]);
-          
+
         $data = new organization();
         if ($request->hasFile('logo')){
             $file = $request->file('logo');
@@ -46,7 +46,7 @@ class organizationController extends Controller
             $path = $_SERVER['DOCUMENT_ROOT']."/umc-fts/image/";
             $uplaod = $file->move($path,$fileName);
 
-            $data->logo = $fileName;  
+            $data->logo = $fileName;
             $data->name = $request->get('name');
             $data->phone_no = $request->get('phone_no');
             $data->email_id = $request->get('email_id');
@@ -66,9 +66,9 @@ class organizationController extends Controller
             $data->GST_No = $request->get('GST_No');
             $data->inserted_dt = date('Y-m-d H:i:s');
             $data->inserted_by = Auth::user()->id;
-            $data->save(); 
+            $data->save();
         }
-        
+
         return redirect()->route('organization.index')->with('message', 'Your Record Added Successfully.');
     }
 
@@ -81,7 +81,7 @@ class organizationController extends Controller
     {
         $data = organization::find($id);
         $path = "https://".$_SERVER['HTTP_HOST']."/umc-fts/image/";
-        
+
         return view('Organization.edit', compact('data', 'path'));
     }
 
@@ -96,7 +96,7 @@ class organizationController extends Controller
         //   'status.required' => 'Organization Status is required',
         //   'logo.required' => 'Organization logo is required',
         //   ]);
-          
+
         $data = organization::find($id);
         if ($request->hasFile('logo')){
             $file = $request->file('logo');
@@ -106,11 +106,11 @@ class organizationController extends Controller
             $uplaod = $file->move($path,$fileName);
             //echo $fileName;
             // exit;
-            
-            $data->logo = $fileName;  
-            
+
+            $data->logo = $fileName;
+
         }
-        
+
         $data->name = $request->get('name');
         $data->phone_no = $request->get('phone_no');
         $data->email_id = $request->get('email_id');
@@ -131,7 +131,7 @@ class organizationController extends Controller
         $data->modify_dt = date('Y-m-d H:i:s');
         $data->modify_by = Auth::user()->id;
         $data->save();
-        
+
         return redirect()->route('organization.index')->with('message', 'Your Record Updated Successfully.');
     }
 

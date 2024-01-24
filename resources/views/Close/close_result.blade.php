@@ -5,7 +5,7 @@
             color: red;
         }
         .select2-container{
-         width:100%!important;   
+         width:100%!important;
         }
     </style>
     <div class="pd-ltr-20 xs-pd-20-10">
@@ -72,11 +72,11 @@
                                 <div class="col-lg-3 p-2">
                                     <strong>File Number : &nbsp;&nbsp;</strong><span>{{ $file_type->file_master_no }}</span>
                                 </div>
-                                
+
                                 <div class="col-lg-3 p-2">
                                     <strong>File Type : &nbsp;&nbsp;</strong><span>{{ $file_type->type }}</span>
                                 </div>
-                                
+
                                 <div class="col-lg-3 p-2">
                                     <strong>Total pages of <br>Tipani/Files :
                                         &nbsp;&nbsp;</strong><span>{{ $file_type->total_pages_of_tipani }}</span>
@@ -90,11 +90,11 @@
                                 <div class="col-lg-3 p-2">
                                     <strong>Created by : &nbsp;&nbsp;</strong><span>{{ $file_type->created_by }}</span>
                                 </div>
-                                
+
                                 <div class="col-lg-3 p-2">
                                     <strong>Department : &nbsp;&nbsp;</strong><span>{{ $file_type->department_name }}</span>
                                 </div>
-                                
+
                                 <div class="col-lg-3 p-2">
                                     <strong>Table : &nbsp;&nbsp;</strong><span>{{ $file_type->table_no }}</span>
                                 </div>
@@ -137,7 +137,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="pd-20 card-box mb-30">
                         <div class="row p-2">
                             <div class="col-lg-3">
@@ -229,9 +229,9 @@
                                             @endif
                                         </div>
                                     </div>
-                                    
+
                                     <div class="form-group row mt-3">
-                                        
+
                                         <?php
                                             $data = DB::select('SELECT
                                                                     users.id,
@@ -245,7 +245,7 @@
                                                                     `id` ASC
                                                                ');
                                         ?>
-                                        
+
                                         <div class="col-sm-4 col-md-4 Peon box" style="display: none;">
                                             <input type="text" name="Peon" id="Peon" class="form-control @error('Peon') is-invalid @enderror" value="" placeholder="Enter Peone Name">
                                             <!--<select class="custom-select2 form-control" name="Peon" id="Peon">-->
@@ -265,7 +265,7 @@
                                     </div>
 
                                     <div class="form-group row mt-3">
-                                        
+
                                         <label class="col-sm-2"><strong>Remark / Tipani&nbsp;&nbsp; : &nbsp;<span
                                                     class="text-danger">*</span></strong></label>
                                         <div class="col-sm-12 col-md-12">
@@ -295,7 +295,7 @@
                                 @else
                                     <p>The File Is Closed !!</p>
                                 @endif
-                                
+
                             </div>
                         </div>
                     </div>
@@ -326,9 +326,7 @@
         <!-- Export Datatable End -->
 
     </div>
-    <div class="footer-wrap pd-20 mb-20 card-box">
-        Copyright ©<?php echo date('Y'); ?>. Designed And Developed By Core Ocean Solutions LLP. All rights reserved.
-    </div>
+    @include('adminlayouts.footer')
     </div>
 @endsection
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\department;
+use App\Models\department;
 use Redirect;
 use PDF;
-use DB;
-use Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class departmentController extends Controller
@@ -16,7 +16,7 @@ class departmentController extends Controller
     {
         $data = DB::select('SELECT * FROM `department_tbl` WHERE deleted_at IS NULL ORDER BY `department_tbl`.`name` ASC');
         //return $data;
-        
+
         return view('Department.grid', compact('data'));
     }
 
@@ -33,13 +33,13 @@ class departmentController extends Controller
         ],[
            'name.required' => 'Department Name is required',
            'status.required' => 'Department Status is required',
-           
+
           ]);
-          
+
         $data = new department();
         $data->status = $request->get('status');
         $data->name = $request->get('name');
-        $data->inserted_dt = date("Y-m-d H:i:s"); 
+        $data->inserted_dt = date("Y-m-d H:i:s");
         $data->inserted_by = Auth::user()->id;
         $data->save();
 
@@ -66,7 +66,7 @@ class departmentController extends Controller
         ],[
            'name.required' => 'Department Name is required',
            'status.required' => 'Department Status is required',
-           
+
           ]);
         $data = department::find($id);
         $data->status = $request->get('status');
