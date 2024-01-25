@@ -9,9 +9,17 @@ use App\Models\department;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Repository\LogRepository;
 
 class RegisterController extends Controller
 {
+    protected $logRepository;
+
+    public function __construct(LogRepository $logRepository)
+    {
+        $this->logRepository = $logRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -31,7 +39,7 @@ class RegisterController extends Controller
                                     WHERE users.deleted_at IS NULL ORDER BY `id` DESC
                                 ');
         // return $data1;
-        return view('auth.User Management.register_grid', compact('data'));
+        return view('auth.User_Management.register_grid', compact('data'));
     }
 
     /**
@@ -42,7 +50,7 @@ class RegisterController extends Controller
     public function create()
     {
         $department = department::orderBy('id','asc')->where('status','=','active')->whereNull('deleted_by')->pluck('name', 'id');
-        return view('auth.User Management.register_create',compact('department'));
+        return view('auth.User_Management.register_create',compact('department'));
     }
 
     public function store(Request $request)
@@ -70,6 +78,7 @@ class RegisterController extends Controller
           'password_confirmation.required' => 'Password confirmation is required',
           'status.required' => 'Status is required',
           ]);
+
         $data = new User();
         $data->name = $request->get('name');
         $data->user_type = $request->get('user_type');
@@ -83,6 +92,8 @@ class RegisterController extends Controller
         $data->created_at = date('Y-m-d H:i:s');
         $data->inserted_by = Auth::user()->id;
         $data->save();
+
+        $this->logRepository->insertLog(Auth::guard('web')->user()->id, 'users', 'register');
 
         return redirect()->route('user.index')->with('message', 'Your Record Added Successfully');
     }
@@ -99,7 +110,7 @@ class RegisterController extends Controller
         //return $audit_mst;
         $data = User::find($id);
 
-        return view('auth.User Management.register_edit', compact('audit_mst', 'data'));
+        return view('auth.User_Management.register_edit', compact('audit_mst', 'data'));
     }
 
     public function update(Request $request, $id)

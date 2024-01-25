@@ -16,7 +16,7 @@
                         </nav>
                     </div>
                     <div class="col-md-6 col-sm-12 text-right">
-                        <a class="btn btn-primary" href="{{ route('user.create') }}" role="button">
+                        <a class="btn btn-primary" href="{{ route('users.create') }}" role="button">
                             <span class="micon ti ti-plus"></span>&nbsp;&nbsp;<span class="mtext">Add</span>
                         </a>
 
@@ -68,13 +68,13 @@
                                     @endif
                                     <td>{{ $file_type->department_name }}</td>
                                     <td>
-                                        <a href="{{ route('user.edit', $file_type->id) }}" class="btn btn-info btn-sm">
+                                        <a href="{{ route('users.edit', $file_type->id) }}" class="btn btn-info btn-sm">
                                             <i class="micon dw dw-pencil-1"></i>
                                         </a>
                                     </td>
 
                                     <td>
-                                        <form action="{{ route('user.destroy', $file_type->id) }}" method="post">
+                                        <form action="{{ route('users.destroy', $file_type->id) }}" method="post">
                                             @csrf
                                             @method('DELETE')
                                             <input name="_method" type="hidden" value="DELETE">

@@ -42,7 +42,7 @@ class HomeController extends Controller
 
             // return $data;
 
-            return view('index', compact('data'));
+            return view('index')->with(['data' => $data]);
         }
         return redirect("login");
     }

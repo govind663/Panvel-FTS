@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Haruncpi\LaravelUserActivity\Traits\Loggable;
+// use Haruncpi\LaravelUserActivity\Traits\Loggable;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, Loggable;
+    use HasApiTokens, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -19,7 +19,21 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'user_type', 'mobile_no', 'email', 'department', 'table_no', 'username', 'password', 'status', 'created_at', 'inserted_by', 'updated_at', 'modify_by', 'deleted_at', 'deleted_by'
+        'name',
+        'user_type',
+        'mobile_no',
+        'email',
+        'department',
+        'table_no',
+        'username',
+        'password',
+        'status',
+        'created_at',
+        'inserted_by',
+        'updated_at',
+        'modify_by',
+        'deleted_at',
+        'deleted_by'
     ];
 
     /**

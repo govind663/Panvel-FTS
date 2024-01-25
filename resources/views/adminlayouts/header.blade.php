@@ -49,6 +49,13 @@
         gtag('config', 'UA-119386393-1');
 
     </script>
+
+    <style>
+        .user-notification .dropdown-menu {
+            width: 320px;
+            padding: 11px 10px;
+        }
+    </style>
 </head>
 
 <body>
@@ -75,57 +82,35 @@
                         <div class="notification-list mx-h-350 customscroll">
                             <ul>
                                 @php
-                                    $data1 = DB::select('SELECT
-                                                                users.id AS user_id,
-                                                                users.name AS user_name,
-                                                                users.user_type AS user_role,
-                                                                users.created_at AS user_joining_date,
-                                                                logs.log_date AS user_login_time,
-                                                                logs.log_type AS user_type
-                                                            FROM
-                                                                `users`
-                                                            JOIN logs ON users.id = logs.user_id
-                                                            WHERE
-                                                                users.deleted_at IS NULL
-                                                            AND
-                                                                logs.log_type = "login"
-                                                            OR
-                                                                logs.log_type = "edit"
-                                                                ORDER BY logs.log_date DESC
-                                                ');
-
-
+                                    $users_logs = DB::table('users')
+                                                    ->select(
+                                                        'users.id AS user_id',
+                                                        'users.name AS user_name',
+                                                        'users.user_type AS user_role',
+                                                        'users.created_at AS user_joining_date',
+                                                        'logs.log_date AS user_login_time',
+                                                        'logs.log_type AS user_type'
+                                                    )
+                                                    ->join('logs', 'users.id', '=', 'logs.user_id')
+                                                    ->where('logs.user_id', Auth::user()->id)
+                                                    ->orderBy('logs.log_date', 'desc')
+                                                    ->get();
+                                    // return $users_logs;
                                 @endphp
-
-                                @foreach ($data1 as $key => $file_type)
-                                    @if(!empty($file_type->user_id == Auth::user()->id ))
-                                        <li>
-                                            <a href="#">
-                                                <img src="{{ url('/') }}/assets/vendors/images/pmc_favico.png" alt="">
-                                                <p><strong>User Name : </strong> {{ $file_type->user_name }}</p>
-                                                <p><strong>User Role : </strong>{{ $file_type->user_role }}</p>
-                                                <p><strong>Join Date : </strong><small>{{date('d F, Y',strtotime($file_type->user_joining_date)) }}</small></p>
-                                                @if ($file_type->user_type == 'login' )
-                                                <p><strong>Login Time : </strong><small>{{ \Carbon\Carbon::parse($file_type->user_login_time)->diffForHumans() }}</small></p>
-                                                @elseif ($file_type->user_type == 'edit')
-                                                <p><strong>Logout Time : </strong><small>{{ \Carbon\Carbon::parse($file_type->user_login_time)->diffForHumans() }}</small></p>
-                                                @endif
-
-                                            </a>
-                                        </li>
-
-                                        {{-- <li>
-                                            <div class="timeline-date bg-danger">
-                                                <strong>Last Login : </strong>{{ $file_type->last_seen }}
-                                            </div>
-                                            <div class="timeline-desc card-box">
-                                                <div class="pd-20">
-                                                    <p><strong>User Name : </strong>{{ $file_type->name }}</p>
-                                                    <p><strong>User Role : </strong>{{ $file_type->user_type }}</p>
-                                                </div>
-                                            </div> --}}
-                                        </li>
-                                    @endif
+                                @foreach($users_logs as $value)
+                                <li>
+                                    <a href="#">
+                                        <img src="{{ url('/') }}/assets/vendors/images/pmc_favico.png" alt="">
+                                        <p><strong>User Name : </strong> {{ $value->user_name }}</p>
+                                        <p><strong>User Role : </strong>{{ $value->user_role }}</p>
+                                        <p><strong>Join Date : </strong><small>{{date('d F, Y',strtotime($value->user_joining_date)) }}</small></p>
+                                        @if ($value->user_type == 'login')
+                                        <p><strong>Login Time : </strong><small class="badge bg-success text-light ">{{ \Carbon\Carbon::parse($value->user_login_time)->diffForHumans() }}</small></p>
+                                        @elseif ($value->user_type == 'logout')
+                                        <p><strong>Logout Time : </strong><small class="badge bg-danger text-light ">{{ \Carbon\Carbon::parse($value->user_login_time)->diffForHumans() }}</small></p>
+                                        @endif
+                                    </a>
+                                </li>
                                 @endforeach
 
                             </ul>
@@ -146,23 +131,14 @@
                     </a>
 
                     <div class="dropdown dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                        <a class="dropdown-toggle no-arrow p-3" href="#" role="button" data-toggle="no-dropdown">
-                            <span class="user-icon">
-                                <img src="{{ url('/') }}/assets/vendors/images/pmc_favico.png" alt="">
-                            </span>
-
-                            <span class="user-name"><strong class="text-info">User Type</strong></span> :-
-                            <span class="user-name"><strong class="text-info">{{ Auth::user()->name }}</strong></span>
-
-                        </a>
                         <a class="dropdown-item no-arrow" href="javascript:;" data-toggle="right-sidebar"><i class="micon dw dw-settings2"></i>{{ __('Setting') }}</a>
                         <!--<a class="dropdown-item" href="{{ route('logout') }}"><i class="micon dw dw-padlock1"></i>{{ __('Lock Screen') }}</a>-->
-                        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                        <a class="dropdown-item" href="{{ route('dept_logout') }}" onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();"><i class="micon dw dw-logout"></i>
                             {{ __('Logout') }}
                         </a>
 
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        <form id="logout-form" action="{{ route('dept_logout') }}" method="POST" style="display: none;">
                             @csrf
                         </form>
                     </div>
@@ -241,7 +217,7 @@
                             <span class="micon dw dw-settings"></span><span class="mtext">Setup</span>
                         </a>
                         <ul class="submenu">
-                            <li><a href="{{ url('user') }}">User</a></li>
+                            <li><a href="{{ route('users.index') }}">User</a></li>
                             <!--<li><a href="{{ url('Authentication') }}">Authorization</a></li>-->
                             <li><a href="{{ url('financial_year') }}">Financial Year</a></li>
                             <li><a href="{{ url('department') }}">Department</a></li>
@@ -471,10 +447,12 @@
     <script src="{{ url('/') }}/assets/vendors/scripts/process.js"></script>
     <script src="{{ url('/') }}/assets/vendors/scripts/layout-settings.js"></script>
     <script src="{{ url('/') }}/assets/src/plugins/apexcharts/apexcharts.min.js"></script>
+
     <script src="{{ url('/') }}/assets/src/plugins/datatables/js/jquery.dataTables.min.js"></script>
     <script src="{{ url('/') }}/assets/src/plugins/datatables/js/dataTables.bootstrap4.min.js"></script>
     <script src="{{ url('/') }}/assets/src/plugins/datatables/js/dataTables.responsive.min.js"></script>
     <script src="{{ url('/') }}/assets/src/plugins/datatables/js/responsive.bootstrap4.min.js"></script>
+
     <script src="{{ url('/') }}/assets/vendors/scripts/dashboard3.js"></script>
 
 

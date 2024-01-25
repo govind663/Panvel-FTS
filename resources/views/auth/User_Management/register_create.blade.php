@@ -14,9 +14,9 @@
         </div>
     </div>
 
-    <form method="post" action="{{ url('user') }}" class="form-horizontal" enctype="multipart/form-data">
-        {{ csrf_field() }}
+    <form method="post" action="{{ route('users.store') }}" class="form-horizontal" enctype="multipart/form-data">
 
+        @csrf
         <div class="pd-20 card-box mb-30">
             <div class="form-group row mt-3">
                 <label class="col-sm-2">Full Name : <span style="color:red;"> *</span></label>
@@ -60,7 +60,7 @@
                         </span>
                     @endif
                 </div>
-        
+
                 <label class="col-sm-2">Email ID : <span style="color:red;"> *</span></label>
                 <div class="col-sm-4 col-md-4">
                     <input type="email" name="email" id="email" class="form-control form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" placeholder="Enter Email Id.">
@@ -70,8 +70,8 @@
                         </span>
                     @endif
                 </div>
-            </div> 
-            
+            </div>
+
             <div class="form-group row mt-3">
                 <label class="col-sm-2 pt-2">Department : <span style="color:red;"> *</span></label>
                 <div class="col-sm-4 col-md-4">
@@ -90,7 +90,7 @@
                         </span>
                     @endif
                 </div>
-                
+
                 <label class="col-sm-2">Table Number : <span style="color:red;"> *</span></label>
                 <div class="col-sm-4 col-md-4">
                     <input type="text" name="table_no" id="table_no" class="form-control form-control @error('table_no') is-invalid @enderror" value="{{ old('table_no') }}" placeholder="Enter Table Number.">
@@ -101,7 +101,7 @@
                     @endif
                 </div>
             </div>
-            
+
             <div class="form-group row mt-3">
                 <!--<label class="col-sm-2">Username : <span style="color:red;"> *</span></label>-->
                 <!--<div class="col-sm-4 col-md-4">-->
@@ -112,7 +112,7 @@
                 <!--        </span>-->
                 <!--    @endif-->
                 <!--</div>-->
-        
+
                 <label class="col-sm-2">Password : <span style="color:red;"> *</span></label>
                 <div class="col-sm-4 col-md-4">
                     <input type="text" name="password" id="password" class="form-control form-control @error('password') is-invalid @enderror" value="{{ old('password') }}" placeholder="Enter Password.">
@@ -122,7 +122,7 @@
                         </span>
                     @endif
                 </div>
-                
+
                 <label class="col-sm-2">Password Confirmation: <span style="color:red;"> *</span></label>
                 <div class="col-sm-4 col-md-4">
                     <input type="text" name="password_confirmation" id="password_confirmation" class="form-control form-control @error('password_confirmation') is-invalid @enderror" value="{{ old('password_confirmation') }}" placeholder="Enter Password Confirmation.">
@@ -133,10 +133,10 @@
                     @endif
                 </div>
             </div>
-            
+
             <div class="form-group row mt-3">
-                
-                
+
+
                 <label class="col-sm-2 pt-2">Status : <span style="color:red;"> *</span></label>
                 <div class="col-sm-4 col-md-4">
                     <select class="custom-select2 form-control @error('status') is-invalid @enderror" name="status"
@@ -154,16 +154,16 @@
                     @endif
                 </div>
             </div>
-            
+
             <div class="form-group row mt-3">
                 <label class="col-md-3"></label>
                 <div class="col-md-9" style="display: flex; justify-content: flex-end;">
-                    <a href="{{ url('user') }}" class="btn btn-danger">Cancel</a>&nbsp;&nbsp;
+                    <a href="{{ route('users.index') }}" class="btn btn-danger">Cancel</a>&nbsp;&nbsp;
                     <button type="submit" class="btn btn-success">Submit</button>
                 </div>
             </div>
-            
+
         </div>
-        
+
     </form>
 @endsection

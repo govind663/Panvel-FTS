@@ -7,12 +7,25 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Repository\LogRepository;
 
 class LoginController extends Controller
 {
+    protected $logRepository;
+
+    public function __construct(LogRepository $logRepository)
+    {
+        $this->logRepository = $logRepository;
+    }
+
     public function login()
     {
-        return view('auth.login');
+        if (Auth::guard('web')->check()) {
+            return redirect('/index');
+        } else {
+            return view('auth.login');
+        }
+
     }
 
     public function authenticate(Request $request)
@@ -51,15 +64,9 @@ class LoginController extends Controller
             $user_deleted_at = Auth::user()->deleted_at;
             $res = DB::table('users')->where('email', "'.$email_str.'")->pluck('user_type')->first();
 
-            return redirect()->intended('index')->with('message', 'You are login successful.');
+            $this->logRepository->insertLog(Auth::guard('web')->user()->id, 'users', 'login');
 
-            // $checkuser = User::where('email', '=', $request->input('email'))->first();
-            //Last Date 23 May
-            // if ($user_deleted_at == " " || $user_type == $res) {
-            //   return redirect()->intended('index')->with('message', 'You are login successful.');
-            // }else{
-            //     return redirect('login')->with('info', 'Your records not exist our database..!!');
-            // }
+            return redirect()->intended('index')->with('message', 'You are login successful.');
 
         }
         else{
@@ -69,9 +76,9 @@ class LoginController extends Controller
     }
 
     public function logout(Request $request) {
+        $this->logRepository->insertLog(Auth::guard('web')->user()->id, 'users', 'logout');
         $request->session()->flush();
         Auth::logout();
-
         return redirect('/')->with('message', 'You are logout successful.');
     }
 }
